@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 18 : 프래그먼트를 정의 -->
+<span th:fragment="one">하나</span>
+<span th:fragment="two">둘</span>
+<span th:fragment="three">셋</span>
+
+<div th:fragment="timer">
+    <button id="startButton">타이머 시작</button>
+    <p id="message"></p>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function () {
+            document.getElementById('message').textContent = '타이머 작동 중...';
+            setTimeout(function () {
+                document.getElementById('message').textContent = '타이머가 끝났습니다!';
+            }, 5000);
+        });
+    </script>
+</div>
+</body>
+</html>

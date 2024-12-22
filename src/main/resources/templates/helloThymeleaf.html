@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- 타임리프 사용 선언-->
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello thymeleaf</title>
+</head>
+<body>
+<!-- 추가 -->
+<h1 th:text="${msg}">표시되는 부분</h1>
+<br>
+<!-- 직접 문자를 삽입 -->
+<h1 th:text="'hello world'">표시하는 부분</h1>
+<br>
+<!-- 인라인 처리 -->
+<!-- 고정값과 변수를 조합하고 싶은 경우 사용 -->
+<h1>안녕하세요! [[${msg}]]씨</h1>
+<!-- 값 결합 -->
+<h1 th:text="'오늘 날씨는 ' + '맑음' + '입니다.'">표시하는 부분</h1>
+<br>
+<!-- 값 결합(리터럴 치환) -->
+<h1 th:text="|안녕하세요 ${name}씨|">표시하는 부분</h1>
+
+<!-- 지역 변수 -->
+<div th:with="a=1, b=2">
+    <span th:text="|${a} + ${b} = ${a+b}|"></span>
+    <br>
+    <span th:text="|${a} * ${b} = ${a*b}|"></span>
+</div>
+<!-- 비교와 등가 -->
+<span th:text="10"></span>
+<span th:text="1 >= 10"></span>
+<!-- 조건 연산자 -->
+<p th:text="${name} == '길동' ? '길동입니다!' : '길동이가 아닙니다.'"></p>
+<!-- 조건 분기(true) -->
+<div th:if="${name} == 'adam'">
+    <p th:text="|${name} 씨 입니다!|"></p>
+</div>
+<br>
+<!-- switch -->
+<div th:switch="${name}">
+    <p th:case="길동" th:text="|${name} 입니다!|"></p>
+    <p th:case="영희" th:text="|${name} 입니다!|"></p>
+    <p th:case="adam" th:text="|${name} 입니다!|"></p>
+    <p th:case="*">명부에 없습니다.</p>
+</div>
+<!-- 참조 -->
+<p th:text="${nameList[0]}">방위</p>
+<p th:text="${nameList[1]}">방위</p>
+<p th:text="${nameList[2]}">방위</p>
+
+<p>----------------------------------------</p>
+<!-- 반복 -->
+<div th:each="member : ${nameList}">
+    <p>[[${member}]]</p>
+</div>
+<!-- 반복 상태 -->
+<div th:each="member : ${member}">
+    <p> [[${member}]]</p>
+</div>
+
+<!-- 유틸리티 객체 (날짜 및 시간) -->
+<div th:with="today = ${#dates.createNow()}">
+    yyyy/mm/dd 형식 : <span th:text="${#dates.format(today, 'yyyy/MM/dd')}"></span><br>
+    yyyy년 mm월 dd 일 형식 : <span th:text="${#dates.format(today,'yyyy년 MM월 dd일')}"></span><br>
+    yyyy 년 : <span th:text="${#dates.year(today)}"></span><br>
+    MM 월 : <span th:text="${#dates.month(today)}"></span><br>
+    dd 일 : <span th:text="${#dates.day(today)}"></span><br>
+    요일 : <span th:text="${#dates.dayOfWeek(today)}"></span><br>
+</div>
+
+<!-- 18 : 프래그먼트 사용하기 -->
+<h1> Fragment 를 아래에 삽입하기. </h1>
+<!--
+Deprecated unwrapped fragment expression "fragment :: one" found in template helloThymeleaf, line 74, col 15. Please use the complete syntax of fragment expressions instead ("~{fragment :: one}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+Deprecated unwrapped fragment expression "fragment :: three" found in template helloThymeleaf, line 75, col 17. Please use the complete syntax of fragment expressions instead ("~{fragment :: three}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+-->
+<!--<div id="one" th:insert="fragment :: one"></div>-->
+<!--<div id="three" th:replace="fragment :: three"></div>-->
+
+<div id="one" th:insert="~{fragment :: one}"></div>
+<div id="two" th:replace="~{fragment :: two}"></div>
+<div id="three" th:replace="~{fragment :: three}"></div>
+<div id="timer" th:replace="~{fragment :: timer}"></div>
+</body>
+</html>
